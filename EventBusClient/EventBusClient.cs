@@ -13,7 +13,7 @@ namespace EventBusClient
         private NetworkStream? _stream;
         public string? Name { get; set; }
 
-        public EventBusClient(string host, int port, string? name)
+        public EventBusClient(string host, int port, string? name=null)
         {
             _host = host;
             _port = port;

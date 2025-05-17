@@ -1,4 +1,5 @@
 ﻿using Shared;
+using System.Net.Sockets;
 
 namespace EventBusClient
 {
@@ -6,16 +7,17 @@ namespace EventBusClient
     {
         public static async Task Main(string[] args)
         {
-            var name = Environment.GetEnvironmentVariable("CLIENT_NAME") ?? "client";
-            Console.WriteLine($"Client name: {name}");
+            var clientName = Environment.GetEnvironmentVariable("CLIENT_NAME") ?? "client";
+            var serverHost = Environment.GetEnvironmentVariable("SERVER_HOST") ?? "server";
+            var serverPort = int.Parse(Environment.GetEnvironmentVariable("SERVER_PORT") ?? "9000");
 
-            var client = new EventBusClient("127.0.0.1", 9000, name);
-            await client.ConnectAsync();
+            var client = new EventBusClient(serverHost, serverPort, clientName);
+            await client.ConnectAsync(); 
 
             await SendMessageAsync(client);
         }
 
-        
+
         private static async Task SendMessageAsync(EventBusClient client)
         {
             Console.WriteLine("Enter messages (or leave blank to exit):");

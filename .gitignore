@@ -24,3 +24,8 @@ build/
 scripts/
 *.sh
 *.bash
+
+# Build and publish output
+publish_server/
+publish_client/
+eventbus_publish.tar.gz
