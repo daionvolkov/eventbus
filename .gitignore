@@ -18,3 +18,9 @@ Thumbs.db
 # Rider/VSCode
 .idea/
 .vscode/
+
+# Local deployment and scripts (do not commit server stuff)
+build/
+scripts/
+*.sh
+*.bash

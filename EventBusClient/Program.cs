@@ -6,8 +6,8 @@ namespace EventBusClient
     {
         public static async Task Main(string[] args)
         {
-            Console.Write("Enter client name: ");
-            var name = Console.ReadLine();
+            var name = Environment.GetEnvironmentVariable("CLIENT_NAME") ?? "client";
+            Console.WriteLine($"Client name: {name}");
 
             var client = new EventBusClient("127.0.0.1", 9000, name);
             await client.ConnectAsync();

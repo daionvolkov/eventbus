@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+  server:
+    build:
+      context: ./EventBusServer
+    container_name: eventbus-server
+    ports:
+      - "9000:9000"
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+
+  neo:
+    build:
+      context: ./EventBusClient
+    container_name: eventbus-client-neo
+    depends_on:
+      - server
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+      - CLIENT_NAME=Neo
+    stdin_open: true
+    tty: true
+
+  trinity:
+    build:
+      context: ./EventBusClient
+    container_name: eventbus-client-trinity
+    depends_on:
+      - server
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+      - CLIENT_NAME=Trinity
+    stdin_open: true
+    tty: true
+
+  morpheus:
+    build:
+      context: ./EventBusClient
+    container_name: eventbus-client-morpheus
+    depends_on:
+      - server
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+      - CLIENT_NAME=Morpheus
+    stdin_open: true
+    tty: true
