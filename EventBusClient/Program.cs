@@ -13,7 +13,6 @@ namespace EventBusClient
             await client.ConnectAsync();
 
             await SendMessageAsync(client);
-
         }
 
         
@@ -35,9 +34,6 @@ namespace EventBusClient
                 await client.SendEventAsync(message);
             }
         }
-
-
-
     }
 }
 
