@@ -7,17 +7,25 @@ namespace EventBusClient
     {
         public static async Task Main(string[] args)
         {
-            var clientName = Environment.GetEnvironmentVariable("CLIENT_NAME") ?? "client";
             var serverHost = Environment.GetEnvironmentVariable("SERVER_HOST") ?? "localhost";
             var serverPort = int.Parse(Environment.GetEnvironmentVariable("SERVER_PORT") ?? "9000");
-
+            var clientName = Environment.GetEnvironmentVariable("CLIENT_NAME") ?? "Anonymous";
             var client = new EventBusClient(serverHost, serverPort, clientName);
+
             await client.ConnectAsync();
             
-            var listener = new EventListener(client);
-            _ = listener.ListenAsync();
-            
-            await SendMessageAsync(client);
+            for (int i = 0; i < 100; i++)
+            {
+                var message = new EventMessage
+                {
+                    Type = "chat",
+                    Data = $"Hello from {clientName}! #{i + 1}",
+                    Sender = clientName
+                };
+                await client.SendEventAsync(message);
+                await Task.Delay(3000); 
+            }
+            await Task.Delay(-1); 
         }
 
 
