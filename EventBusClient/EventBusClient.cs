@@ -19,6 +19,8 @@ namespace EventBusClient
             _port = port;
             Name = name;
         }
+        public NetworkStream GetStream() => _stream;
+        public bool IsConnected => _client?.Connected ?? false;
 
 
         public async Task ConnectAsync()

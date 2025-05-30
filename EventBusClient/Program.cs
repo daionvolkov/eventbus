@@ -8,12 +8,15 @@ namespace EventBusClient
         public static async Task Main(string[] args)
         {
             var clientName = Environment.GetEnvironmentVariable("CLIENT_NAME") ?? "client";
-            var serverHost = Environment.GetEnvironmentVariable("SERVER_HOST") ?? "server";
+            var serverHost = Environment.GetEnvironmentVariable("SERVER_HOST") ?? "localhost";
             var serverPort = int.Parse(Environment.GetEnvironmentVariable("SERVER_PORT") ?? "9000");
 
             var client = new EventBusClient(serverHost, serverPort, clientName);
-            await client.ConnectAsync(); 
-
+            await client.ConnectAsync();
+            
+            var listener = new EventListener(client);
+            _ = listener.ListenAsync();
+            
             await SendMessageAsync(client);
         }
 
